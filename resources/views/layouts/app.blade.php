@@ -23,10 +23,14 @@
             </div>
             <ul class="nav-links">
                 <li><a href="{{ route('dashboard') }}" class="{{ request()->is('/') ? 'active' : '' }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="{{ route('pelanggan.index') }}" class="{{ request()->is('pelanggan*') ? 'active' : '' }}"></i> Data Pelanggan</a></li>
-                <li> <a href="{{ route('pembayaran.index') }}" class="{{ request()->is('pembayaran*') ? 'active' : '' }}"><i class="fas fa-credit-card"></i> Pembayaran </a></li>
-                <li> <a href="{{ route('transkrip.index') }}" class="{{ request()->is('transkrip*') ? 'active' : '' }}"></i> Transkrip</a></li>
-            </ul>
+    <li>
+        <a href="{{ route('pelanggan.index') }}" class="{{ request()->is('pelanggan*') ? 'active' : '' }}">
+            <i class="fas fa-users"></i> Data Pelanggan
+        </a>
+    </li>                <li> <a href="{{ route('pembayaran.index') }}" class="{{ request()->is('pembayaran*') ? 'active' : '' }}"><i class="fas fa-credit-card"></i> Pembayaran </a></li>
+    <li>
+        <a href="{{ route('transkrip.index') }}" class="{{ request()->is('transkrip*') ? 'active' : '' }}""><i class="fas fa-chart-bar"></i> Transkrip</a>
+    </li>            </ul>
 
             <div class="sidebar-user-box">
                 @php

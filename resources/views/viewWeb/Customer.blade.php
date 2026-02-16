@@ -168,7 +168,6 @@
                     <h3><i class="fas fa-users-cog"></i> Kelola Data Pelanggan</h3>
                     <div class="header-actions">
                         <button class="btn btn-success" onclick="document.querySelector('[data-tab=tambah-pelanggan]').click()"><i class="fas fa-user-plus"></i> Tambah Pelanggan</button>
-                        <button class="btn btn-secondary"><i class="fas fa-file-export"></i> Export Data</button>
                     </div>
                 </div>
 
@@ -193,16 +192,7 @@
                         <option value="Lama 25 Mbps">Paket Lama - 25 Mbps</option>
                         <option value="Baru 25 Mbps">Paket Baru - 25 Mbps</option>
                     </select>
-                    <select id="sort-by" class="form-control">
-                        <option value="id_asc">ID (CP)</option>
-                        <option value="id_asc">ID (PAKEL)</option>
-                        <option value="id_asc">ID (PAPUN)</option>
-                        <option value="id_asc">ID (PASIR)</option>
-                        <option value="id_asc">ID (SIDOD)</option>
-                        <option value="id_asc">ID (SUMBE)</option>
-                        <option value="id_asc">ID (SAWEN)</option>
-                        <option value="id_asc">ID (PASIR)</option>
-                    </select>
+
                 </div>
 
                 <div class="stats-summary" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
@@ -275,7 +265,6 @@
                                 <th>Jatuh Tempo</th>
                                 <th>Status</th>
                                 <th>Keterangan</th>
-                                <th width="120">Aksi</th>
                             </tr>
                             
                         </thead>
@@ -321,7 +310,7 @@
         . "- Mandiri\n1710006839313\n"
         . "- BNI\n0209467638\n"
         . "- BCA\n0901329604\n"
-        . "- Bank Jatim\1652021740\n"
+        . "- Bank Jatim\n1652021740\n"
         . "(Transfer ke rekening resmi atas nama *PURWATI*)\n\n"
         . " Setelah melakukan pembayaran, mohon kirimkan *bukti transfer* "
         . "melalui WhatsApp ini agar dapat segera kami proses.\n\n"

@@ -42,59 +42,9 @@
                         <input type="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Login Sekarang</button>
-                    <div class="form-footer">
-                        <p>Belum punya akun? <a href="#" id="show-register">Daftar disini</a></p>
-                    </div>
-                </form>
-
-                <form id="register-form" action="{{ route('register.post') }}" method="POST" style="display: none;">
-                    @csrf
-                    <div class="form-header">
-                        <h2><i class="fas fa-user-plus"></i> Registrasi</h2>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input type="text" name="register_fullname" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" name="register_username" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" name="register_password" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Kualifikasi (Role)</label>
-                        <select name="register_role" class="form-control" required>
-                            <option value="admin">Karyawan (Admin)</option>
-                            <option value="super_admin">Administrator (Super Admin)</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">Daftar Akun</button>
-                    <div class="form-footer">
-                        <p>Sudah punya akun? <a href="#" id="show-login">Login disini</a></p>
-                    </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <script>
-        const loginForm = document.getElementById('login-form');
-        const registerForm = document.getElementById('register-form');
-        
-        document.getElementById('show-register').onclick = (e) => {
-            e.preventDefault();
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'block';
-        };
-        
-        document.getElementById('show-login').onclick = (e) => {
-            e.preventDefault();
-            registerForm.style.display = 'none';
-            loginForm.style.display = 'block';
-        };
-    </script>
 </body>
 </html>

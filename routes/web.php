@@ -10,7 +10,6 @@ use App\Http\Controllers\TranscriptController;
 // --- RUTE PUBLIK ---
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
 // --- RUTE TERPROTEKSI (Wajib Login) ---
 Route::middleware(['auth'])->group(function () {
@@ -30,4 +29,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pembayaran', [PaymentController::class, 'store'])->name('pembayaran.store');
     Route::get('/pembayaran/cetak/{id}', [PaymentController::class, 'downloadStruk'])->name('pembayaran.cetak');
     Route::delete('/pembayaran/{id}', [PaymentController::class, 'destroy'])->name('pembayaran.destroy');
-});Route::post('/pembayaran/import', [PaymentController::class, 'import'])->name('pembayaran.import');
+    Route::post('/pembayaran/import', [PaymentController::class, 'import'])->name('pembayaran.import');
+});
