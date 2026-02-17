@@ -135,7 +135,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="tanggal-expire">Jatuh Tempo</label>
-                                <input type="date" name="expiry_date" id="tanggal-expire" class="form-control">
+                                <input type="date" name="expiry_date" id="tanggal-expire" class="form-control" value="{{ \Carbon\Carbon::now()->addMonthNoOverflow()->day(15)->format('Y-m-d') }}">
                             </div>
                             <div class="form-group mb-3">
     <label>Keterangan / Catatan</label>
@@ -277,14 +277,16 @@
                                 <td>{{ $item->phone }}</td>
                                 <td>{{ Str::limit($item->address, 15) }}</td>
                                 <td><span style="background: #e1f5fe; color: #0288d1; padding: 4px 8px; border-radius: 4px; font-size: 0.85rem;">{{ $item->package }}</span></td>
-                                <td>{{ $item->installation_date }}</td>
-                                <td>{{ $item->expiry_date ?? '-' }}</td>
+                                <td>{{ $item->installation_date ? \Carbon\Carbon::parse($item->installation_date)->format('Y-m-d') : '-' }}</td>
+                                <td>
+                                    {{ $item->status === 'nonaktif' ? '-' : ($item->expiry_date ? \Carbon\Carbon::parse($item->expiry_date)->format('Y-m-d') : '-') }}
+                                </td>
                                 <td><span class="status-badge {{ $item->status == 'aktif' ? 'status-active' : 'status-expired' }}">{{ ucfirst($item->status) }}</span></td>
                                 <td>{{ $item->keterangan ?? '-' }}</td> <td>
                                 <td>
                                     <div style="display: flex; gap: 5px;">
                                         <button class="btn-icon btn-detail" style="background: #3498db; color: white; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer;" 
-                                            data-name="{{ $item->full_name }}" data-id="{{ $item->customer_id_string }}" data-phone="{{ $item->phone }}" data-address="{{ $item->address }}" data-package="{{ $item->package }}" data-status="{{ $item->status }}" data-install="{{ $item->installation_date }}" data-expire="{{ $item->expiry_date }}">
+                                            data-name="{{ $item->full_name }}" data-id="{{ $item->customer_id_string }}" data-phone="{{ $item->phone }}" data-address="{{ $item->address }}" data-package="{{ $item->package }}" data-status="{{ $item->status }}" data-install="{{ $item->installation_date ? \Carbon\Carbon::parse($item->installation_date)->format('Y-m-d') : '' }}" data-expire="{{ $item->expiry_date ? \Carbon\Carbon::parse($item->expiry_date)->format('Y-m-d') : '' }}">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button class="btn-icon btn-edit" 
@@ -303,7 +305,7 @@
     $message = "Halo *{$item->full_name}*,\n\n"
         . "Kami dari *CV BAMS* ingin mengingatkan bahwa layanan internet paket "
         . "*{$item->package}* Anda akan jatuh tempo pada tanggal "
-        . "*{$item->expiry_date}*.\n\n"
+        . "*" . ($item->status === 'nonaktif' ? '-' : ($item->expiry_date ? \Carbon\Carbon::parse($item->expiry_date)->format('Y-m-d') : '-')) . "*.\n\n"
         . "Mohon segera melakukan pembayaran untuk menghindari isolir layanan.\n\n"
         . " Metode Pembayaran:\n"
         . "- BRI\n616801005179509\n"
@@ -511,6 +513,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const installDateInput = document.getElementById('tanggal-pemasangan');
+    const expiryDateInput = document.getElementById('tanggal-expire');
+
+    function setDefaultExpiryTo15NextMonth() {
+        if (!installDateInput || !expiryDateInput) return;
+
+        const baseDate = installDateInput.value ? new Date(installDateInput.value) : new Date();
+        if (isNaN(baseDate.getTime())) return;
+
+        const nextMonthDue = new Date(baseDate.getFullYear(), baseDate.getMonth() + 1, 15);
+        const yyyy = nextMonthDue.getFullYear();
+        const mm = String(nextMonthDue.getMonth() + 1).padStart(2, '0');
+        const dd = String(nextMonthDue.getDate()).padStart(2, '0');
+
+        expiryDateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    // Inisialisasi default agar konsisten: tanggal 15 bulan depan
+    setDefaultExpiryTo15NextMonth();
+
+    // Jika tanggal pemasangan berubah, jatuh tempo ikut disesuaikan
+    installDateInput?.addEventListener('change', setDefaultExpiryTo15NextMonth);
+
     const dueModal = document.getElementById('dueCustomersModal');
     const openDueBtn = document.getElementById('openDueCustomersModal');
     const closeDueBtn = document.getElementById('closeDueCustomersModal');

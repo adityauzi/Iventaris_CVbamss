@@ -24,6 +24,9 @@ class CustomerImport implements ToModel, WithHeadingRow, SkipsEmptyRows
         $customer = Customer::firstOrCreate(
             ['customer_id_string' => $row['no_customer'] ?? 'PLG-' . uniqid()],
             [
+                'expiry_date' => !empty($row['start'])
+                    ? Carbon::parse($row['start'])->addMonthNoOverflow()->day(15)->format('Y-m-d')
+                    : now()->addMonthNoOverflow()->day(15)->format('Y-m-d'),
                 'full_name' => trim($fullName),
                 'address'   => $row['alamat'] ?? 'Semanding',
                 'package'   => ((int)$row['wifi'] >= 250000) ? '25 Mbps' : '10 Mbps',

@@ -19,4 +19,9 @@ class Customer extends Model
     'notes',
     'keterangan'
 ];
+
+    protected $casts = [
+        'installation_date' => 'date:Y-m-d',
+        'expiry_date' => 'date:Y-m-d',
+    ];
 }
